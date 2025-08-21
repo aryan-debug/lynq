@@ -1,0 +1,8 @@
+.editor .ProseMirror .editing {
+    padding: 2px;
+    outline: none !important;
+}
+
+.editor:focus {
+    outline: none;
+}
