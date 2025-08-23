@@ -1,6 +1,7 @@
 .editor .ProseMirror .editing {
     padding: 2px;
     outline: none !important;
+    height: inherit;
 }
 
 .editor:focus {

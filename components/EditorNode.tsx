@@ -1,9 +1,10 @@
-import { Handle, Position, useReactFlow } from "@xyflow/react";
+import { Handle, NodeResizer, Position, useReactFlow } from "@xyflow/react";
 import { useState } from "react";
 import Editor from "./Editor";
 import "./styles/editor_node.css";
 
-export function EditorNode({ id, data }: { id: string, data: { label?: string } }) {
+
+export function EditorNode({ id, data, selected }: { id: string, data: { label?: string }, selected: boolean }) {
     const [isEditing, setIsEditing] = useState(false);
     const { setNodes } = useReactFlow();
 
@@ -24,7 +25,8 @@ export function EditorNode({ id, data }: { id: string, data: { label?: string } 
         setIsEditing(true);
     };
 
-    return (
+    return (<>
+        <NodeResizer minWidth={50} minHeight={30} isVisible={selected} />
         <div
             className="editor-node"
             style={{
@@ -32,8 +34,8 @@ export function EditorNode({ id, data }: { id: string, data: { label?: string } 
             }}
             onDoubleClick={handleDoubleClick}
         >
-            <Handle type="target" position={Position.Top} />
-            <Handle type="source" position={Position.Bottom} />
+            <Handle type="target" position={Position.Left} />
+            <Handle type="source" position={Position.Right} />
 
             <Editor
                 content={data?.label || "Double-click to edit"}
@@ -42,5 +44,6 @@ export function EditorNode({ id, data }: { id: string, data: { label?: string } 
                 onContentChange={handleContentChange}
             />
         </div>
+    </>
     );
 }

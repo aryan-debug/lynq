@@ -8,7 +8,7 @@ import FloatingMenu from '@/components/FloatingMenu';
 const nodeTypes = { editorNode: EditorNode } satisfies NodeTypes;
 
 function Flow() {
-  const [nodes, _, onNodesChange] = useNodesState<Node>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   const onConnect: OnConnect = useCallback(
@@ -28,9 +28,8 @@ function Flow() {
         fitView
       >
         <Background color="#111" variant={BackgroundVariant.Dots} />
+        <FloatingMenu />
       </ReactFlow>
-
-      <FloatingMenu />
     </div >
   );
 }
