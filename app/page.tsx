@@ -4,11 +4,12 @@ import { ReactFlow, addEdge, Background, BackgroundVariant, ReactFlowProvider, u
 import '@xyflow/react/dist/style.css';
 import { EditorNode } from '@/components/EditorNode';
 import FloatingMenu from '@/components/FloatingMenu';
+import Sidebar from '@/components/Sidebar';
 
 const nodeTypes = { editorNode: EditorNode } satisfies NodeTypes;
 
 function Flow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [nodes, _, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   const onConnect: OnConnect = useCallback(
@@ -29,6 +30,7 @@ function Flow() {
       >
         <Background color="#111" variant={BackgroundVariant.Dots} />
         <FloatingMenu />
+        <Sidebar />
       </ReactFlow>
     </div >
   );
