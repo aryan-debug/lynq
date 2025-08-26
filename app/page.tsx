@@ -23,6 +23,16 @@ function MainApp() {
     setActiveFlowId(id);
   }, []);
 
+  const addFlow = useCallback(() => {
+    setFlows([...flows, { id: `flow${flows.length + 1}`, name: `${flows.length + 1}`, nodes: [], edges: [] }])
+  }, [flows])
+
+  const changeFlowName = useCallback((id: string, newName: string) => {
+    setFlows(prev => prev.map(flow =>
+      flow.id === id ? { ...flow, name: newName } : flow
+    ));
+  }, [])
+
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
@@ -41,6 +51,8 @@ function MainApp() {
         flows={flows}
         activeFlowId={activeFlowId}
         onSelectFlow={handleFlowSelect}
+        onAddFlow={addFlow}
+        onChangeFlowName={changeFlowName}
       />
     </div>
   );
