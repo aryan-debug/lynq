@@ -26,10 +26,11 @@ function Sidebar({ flows, activeFlowId, onSelectFlow, onAddFlow, onChangeFlowNam
         setIsClient(true);
     }, []);
 
+    const flowIds = flows.map(f => f.id)
+
     const flowHues = useMemo(() => {
         if (!isClient) return {};
 
-        // Keep existing hues and only generate new ones for flows that don't have them
         const newHues = { ...huesCacheRef.current };
 
         flows.forEach(flow => {
@@ -38,7 +39,6 @@ function Sidebar({ flows, activeFlowId, onSelectFlow, onAddFlow, onChangeFlowNam
             }
         });
 
-        // Remove hues for flows that no longer exist
         const currentFlowIds = new Set(flows.map(f => f.id));
         Object.keys(newHues).forEach(id => {
             if (!currentFlowIds.has(id)) {
@@ -48,7 +48,7 @@ function Sidebar({ flows, activeFlowId, onSelectFlow, onAddFlow, onChangeFlowNam
 
         huesCacheRef.current = newHues;
         return newHues;
-    }, [flows.map(f => f.id).join(','), isClient]);
+    }, [flowIds, isClient]);
 
     return (
         <Panel position="top-left" className={`sidebar-panel ${lato.className}`}>

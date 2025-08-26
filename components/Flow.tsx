@@ -22,7 +22,7 @@ interface FlowProps {
 
 
 function Flow({ flowId, flowData, onFlowChange, isActive }: FlowProps) {
-    const [nodes, setNodes, onNodesChange] = useNodesState<Node>(flowData.nodes);
+    const [nodes, , onNodesChange] = useNodesState<Node>(flowData.nodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(flowData.edges);
 
     useEffect(() => {
