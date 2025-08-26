@@ -4,7 +4,7 @@ import Tooltip from "./Tooltip";
 import { Panel, useReactFlow, useStoreApi } from "@xyflow/react";
 import { useCallback } from "react";
 
-function FloatingMenu() {
+function FloatingMenu({ flowId }: { flowId: string }) {
     const store = useStoreApi()
     const { addNodes, screenToFlowPosition, setNodes, setEdges, setViewport, toObject } = useReactFlow()
 
@@ -27,13 +27,13 @@ function FloatingMenu() {
 
     const saveWork = useCallback(() => {
         const flow = toObject();
-        localStorage.setItem("test", JSON.stringify(flow));
-    }, [toObject]);
+        localStorage.setItem(`flow-${flowId}`, JSON.stringify(flow));
+    }, [toObject, flowId]);
 
     const restoreWork = useCallback(() => {
         const restoreFlow = async () => {
             let flow: any;
-            const storedFlow = localStorage.getItem("test");
+            const storedFlow = localStorage.getItem(`flow-${flowId}`);
             if (storedFlow) {
                 flow = JSON.parse(storedFlow);
             }
@@ -45,7 +45,7 @@ function FloatingMenu() {
             }
         };
         restoreFlow();
-    }, [setNodes, setEdges, setViewport]);
+    }, [setNodes, setEdges, setViewport, flowId]);
 
     return <Panel className="floating-menu" position="bottom-center" style={{ backgroundColor: "white" }}>
         <Tooltip text="Add note" position="top">

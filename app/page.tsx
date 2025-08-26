@@ -1,45 +1,49 @@
 "use client"
-import { useCallback } from 'react';
-import { ReactFlow, addEdge, Background, BackgroundVariant, ReactFlowProvider, useNodesState, useEdgesState, OnConnect, BuiltInNode, Node, NodeTypes, Edge } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-import { EditorNode } from '@/components/EditorNode';
-import FloatingMenu from '@/components/FloatingMenu';
+
+import { useCallback, useState } from 'react';
+import { ReactFlowProvider, Node, Edge } from '@xyflow/react';
+import Flow, { FlowData } from '@/components/Flow';
 import Sidebar from '@/components/Sidebar';
+import '@xyflow/react/dist/style.css';
 
-const nodeTypes = { editorNode: EditorNode } satisfies NodeTypes;
+function MainApp() {
+  const [flows, setFlows] = useState<FlowData[]>([
+    { id: 'flow1', name: 'People', nodes: [], edges: [] },
+    { id: 'flow2', name: 'Events', nodes: [], edges: [] }
+  ]);
+  const [activeFlowId, setActiveFlowId] = useState('flow1');
 
-function Flow() {
-  const [nodes, _, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const handleFlowChange = useCallback((id: string, nodes: Node[], edges: Edge[]) => {
+    setFlows(prev => prev.map(flow =>
+      flow.id === id ? { ...flow, nodes, edges } : flow
+    ));
+  }, []);
 
-  const onConnect: OnConnect = useCallback(
-    (connection) => setEdges((edges) => addEdge(connection, edges)),
-    [setEdges]
-  );
+  const handleFlowSelect = useCallback((id: string) => {
+    setActiveFlowId(id);
+  }, []);
+
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-        fitView
-      >
-        <Background color="#111" variant={BackgroundVariant.Dots} />
-        <FloatingMenu />
-        <Sidebar />
-      </ReactFlow>
-    </div >
+    <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+      {flows.map(flow => (
+        <ReactFlowProvider key={flow.id}>
+          <Flow
+            flowId={flow.id}
+            flowData={flow}
+            onFlowChange={handleFlowChange}
+            isActive={activeFlowId === flow.id}
+          />
+        </ReactFlowProvider>
+      ))}
+
+      <Sidebar
+        flows={flows}
+        activeFlowId={activeFlowId}
+        onSelectFlow={handleFlowSelect}
+      />
+    </div>
   );
 }
 
-export default function () {
-  return (
-    <ReactFlowProvider>
-      <Flow />
-    </ReactFlowProvider>
-  );
-}
+export default MainApp;
