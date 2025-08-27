@@ -12,25 +12,9 @@ const lato = Lato({ weight: "400" });
 
 interface SidebarProps {
   projects: Project[];
-  activeProject: Project;
-  setActiveProjectId: (projectId: string) => void;
-  activeFlowId: string;
-  onSelectFlow: (id: string) => void;
-  onAddFlow: (projectId: string) => void;
-  onChangeFlowName: (projectId: string, flowId: string, name: string) => void;
-  nodeTypes?: any;
 }
 
-function Sidebar({
-  projects,
-  activeProject,
-  setActiveProjectId,
-  activeFlowId,
-  onSelectFlow,
-  onAddFlow,
-  onChangeFlowName,
-  nodeTypes = {},
-}: SidebarProps) {
+function Sidebar({ projects }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isProjectView, setIsProjectView] = useState(false);
 
@@ -64,19 +48,10 @@ function Sidebar({
             <FlowsPanel
               isOpen={isOpen}
               setIsOpen={setIsOpen}
-              activeProject={activeProject}
-              activeFlowId={activeFlowId}
-              onSelectFlow={onSelectFlow}
-              onAddFlow={onAddFlow}
-              onChangeFlowName={onChangeFlowName}
-              nodeTypes={nodeTypes}
               setIsProjectView={setIsProjectView}
               isProjectView={isProjectView}
             />
             <ProjectsPanel
-              projects={projects}
-              activeProject={activeProject}
-              setActiveProjectId={setActiveProjectId}
               setIsProjectView={setIsProjectView}
               isProjectView={isProjectView}
             />

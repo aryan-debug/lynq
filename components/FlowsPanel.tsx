@@ -3,18 +3,13 @@ import { ReactFlow, MiniMap } from "@xyflow/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import EditableHeading from "./EditableHeading";
-import { Project } from "@/app/page";
 import "./styles/flowsPanel.css";
+import { useProjectStore } from "@/stores/projectStore";
+import { nodeTypes } from "./Flow";
 
 interface FlowsPanelProps {
   isOpen: boolean;
   setIsOpen: (status: boolean) => void;
-  activeProject: Project;
-  activeFlowId: string;
-  onSelectFlow: (id: string) => void;
-  onAddFlow: (projectId: string) => void;
-  onChangeFlowName: (projectId: string, flowId: string, name: string) => void;
-  nodeTypes: any;
   setIsProjectView: (v: boolean) => void;
   isProjectView: boolean;
 }
@@ -22,16 +17,21 @@ interface FlowsPanelProps {
 function FlowsPanel({
   isOpen,
   setIsOpen,
-  activeProject,
-  activeFlowId,
-  onSelectFlow,
-  onAddFlow,
-  onChangeFlowName,
-  nodeTypes,
   setIsProjectView,
   isProjectView,
 }: FlowsPanelProps) {
   const [isClient, setIsClient] = useState(false);
+  const {
+    projects,
+    activeProjectId,
+    activeFlowId,
+    setActiveFlowId,
+    updateFlowName,
+    addFlow,
+  } = useProjectStore();
+
+  const activeProject =
+    projects.find((project) => project.id === activeProjectId) || projects[0];
 
   const huesCacheRef = useRef<Record<string, number>>({});
 
@@ -92,13 +92,13 @@ function FlowsPanel({
                 className={`minimap-container ${
                   activeFlowId === flow.id ? "active" : ""
                 }`}
-                onClick={() => onSelectFlow(flow.id)}
+                onClick={() => setActiveFlowId(flow.id)}
               >
                 <div onClick={(e) => e.stopPropagation()}>
                   <EditableHeading
                     value={flow.name}
                     onChange={(newName) =>
-                      onChangeFlowName(activeProject.id, flow.id, newName)
+                      updateFlowName(activeProject.id, flow.id, newName)
                     }
                     className="minimap-title"
                     style={{ marginBottom: "5px", textAlign: "center" }}
@@ -141,7 +141,7 @@ function FlowsPanel({
             <button
               className="add-button"
               role="button"
-              onClick={() => onAddFlow(activeProject.id)}
+              onClick={() => addFlow(activeProject.id)}
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>

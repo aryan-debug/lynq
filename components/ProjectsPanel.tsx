@@ -3,22 +3,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { Project } from "@/app/page";
 import "./styles/projectsPanel.css";
+import { useProjectStore } from "@/stores/projectStore";
 
 interface ProjectsPanelProps {
-  projects: Project[];
-  activeProject: Project;
-  setActiveProjectId: (id: string) => void;
   setIsProjectView: (v: boolean) => void;
   isProjectView: boolean;
 }
 
 function ProjectsPanel({
-  projects,
-  activeProject,
-  setActiveProjectId,
   setIsProjectView,
   isProjectView,
 }: ProjectsPanelProps) {
+  const { projects, activeProjectId, setActiveProjectId } = useProjectStore();
+
+  const activeProject =
+    projects.find((project) => project.id === activeProjectId) || projects[0];
+
   return (
     <div className={`project-panel ${isProjectView ? "show" : ""}`}>
       <button

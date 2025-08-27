@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   ReactFlow,
   addEdge,
@@ -14,6 +14,7 @@ import {
 import { EditorNode } from "@/components/EditorNode";
 import FloatingMenu from "@/components/FloatingMenu";
 import { Project } from "@/app/page";
+import { useProjectStore } from "@/stores/projectStore";
 
 export const nodeTypes = { editorNode: EditorNode } satisfies NodeTypes;
 
@@ -28,32 +29,33 @@ interface FlowProps {
   project: Project;
   flowId: string;
   flowData: FlowData;
-  onFlowChange: (
-    projectId: string,
-    flowId: string,
-    nodes: Node[],
-    edges: Edge[],
-  ) => void;
-  isActive: boolean;
 }
 
-function Flow({
-  project,
-  flowId,
-  flowData,
-  onFlowChange,
-  isActive,
-}: FlowProps) {
-  const [nodes, , onNodesChange] = useNodesState<Node>(flowData.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(flowData.edges);
+function Flow({ project, flowId, flowData }: FlowProps) {
+  const { onNodesChange, onEdgesChange, onConnect, activeFlowId } =
+    useProjectStore();
+  const { nodes, edges } = flowData;
+  const isActive = flowId === activeFlowId;
 
-  useEffect(() => {
-    onFlowChange(project.id, flowData.id, nodes, edges);
-  }, [nodes, edges, flowData.id, onFlowChange]);
+  const handleNodesChange = useCallback(
+    (changes: Parameters<typeof onNodesChange>[2]) => {
+      onNodesChange(project.id, flowId, changes);
+    },
+    [project.id, flowId, onNodesChange],
+  );
 
-  const onConnect: OnConnect = useCallback(
-    (connection) => setEdges((edges) => addEdge(connection, edges)),
-    [setEdges],
+  const handleEdgesChange = useCallback(
+    (changes: Parameters<typeof onEdgesChange>[2]) => {
+      onEdgesChange(project.id, flowId, changes);
+    },
+    [project.id, flowId, onEdgesChange],
+  );
+
+  const handleConnect = useCallback(
+    (connection: Parameters<typeof onConnect>[2]) => {
+      onConnect(project.id, flowId, connection);
+    },
+    [project.id, flowId, onConnect],
   );
 
   return (
@@ -62,9 +64,9 @@ function Flow({
         <ReactFlow
           nodes={nodes}
           edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+          onNodesChange={handleNodesChange}
+          onEdgesChange={handleEdgesChange}
+          onConnect={handleConnect}
           nodeTypes={nodeTypes}
           fitView
         >
