@@ -1,130 +1,74 @@
-.sidebar-panel {
-    height: 100%;
-    background-color: #f5f5f5;
-    padding: 1.3em;
-    margin: 0 !important;
-    padding: 0;
+.sidebar-container {
+  position: relative;
 }
-
-/* Position and sizing of burger button */
-.bm-burger-button {
-    position: fixed;
-    width: 28px;
-    height: 20px;
-    left: 36px;
-    top: 36px;
+.hamburger-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 50;
+  padding: 8px;
+  color: black;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
-
-/* Color/shape of burger icon bars */
-.bm-burger-bars {
-    background: #000000;
-    border-radius: 2px;
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  transition: opacity 0.3s;
 }
-
-/* Color/shape of burger icon bars on hover*/
-.bm-burger-bars-hover {
-    background: #000000;
+.menu-panel {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 350px;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  overflow-y: auto;
 }
-
-/* Position and sizing of clickable cross button */
-.bm-cross-button {
-    height: 24px;
-    width: 24px;
+.menu-panel.open {
+  left: 0;
+  transition: left 0.3s ease-in;
 }
-
-/* Color/shape of close button cross */
-.bm-cross {
-    background: #222222;
-    border-radius: 3px;
+.menu-panel.closed {
+  left: -500px;
+  transition: left 0.3s ease-in;
 }
-
-/*
-  Sidebar wrapper styles
-  Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
-  */
-.bm-menu-wrap {
-    position: fixed;
-    height: 100%;
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-
-/* General sidebar styles */
-.bm-menu {
-    background: #f7f7f7;
-    padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
+.close-button {
+  color: #787878;
+  padding: 4px 8px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in;
+  width: fit-content;
 }
-
-/* Morph shape necessary with bubble or elastic */
-.bm-morph-shape {
-    fill: #373a47;
+.close-button:hover {
+  transform: translateX(-5px);
 }
-
-/* Wrapper for item list */
-.bm-item-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2em;
-    color: #282828;
-    padding: 0.8em;
-}
-
-/* Individual item */
-.bm-item {
-    display: inline-block;
-}
-
-/* Styling of overlay */
-.bm-overlay {
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.add-button {
-    background-color: #FFFFFF;
-    border: 2px solid #222222;
-    border-radius: 8px;
-    box-sizing: border-box;
-    color: #222222;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 20px;
-    margin: 0;
-    outline: none;
-    padding: 13px 23px;
-    text-align: center;
-    text-decoration: none;
-    touch-action: manipulation;
-    transition: box-shadow .2s, -ms-transform .1s, -webkit-transform .1s, transform .1s;
-    user-select: none;
-    -webkit-user-select: none;
-    width: 100%;
-    position: relative
-}
-
-.add-button:focus-visible {
-    box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
-    transition: box-shadow .2s;
-}
-
-.add-button:active {
-    background-color: #F7F7F7;
-    border-color: #000000;
-    transform: scale(.96);
-}
-
-.add-button:disabled {
-    border-color: #DDDDDD;
-    color: #DDDDDD;
-    cursor: not-allowed;
-    opacity: 1;
-}
-
-.add-button::after {
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 100px;
+.menu-content {
+  display: flex;
+  height: calc(100% - 73px);
+  position: relative;
+  overflow: hidden;
 }

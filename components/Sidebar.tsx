@@ -1,109 +1,90 @@
-import { Panel, ReactFlow, MiniMap } from '@xyflow/react';
-import { useMemo, useState, useEffect, useRef } from 'react';
-import './styles/sidebar.css';
-import { FlowData, nodeTypes } from './Flow';
-import { Inter } from 'next/font/google';
-import { slide as Menu } from 'react-burger-menu';
-import EditableHeading from './EditableHeading';
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { Panel } from "@xyflow/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Lato } from "next/font/google";
+import { Project } from "@/app/page";
+import FlowsPanel from "./FlowsPanel";
+import ProjectsPanel from "./ProjectsPanel";
+import "./styles/sidebar.css";
+
+const lato = Lato({ weight: "400" });
 
 interface SidebarProps {
-    flows: FlowData[];
-    activeFlowId: string;
-    onSelectFlow: (id: string) => void;
-    onAddFlow: () => void;
-    onChangeFlowName: (id: string, name: string) => void;
+  projects: Project[];
+  activeProject: Project;
+  setActiveProjectId: (projectId: string) => void;
+  activeFlowId: string;
+  onSelectFlow: (id: string) => void;
+  onAddFlow: (projectId: string) => void;
+  onChangeFlowName: (projectId: string, flowId: string, name: string) => void;
+  nodeTypes?: any;
 }
 
-const lato = Inter({
-    weight: "400"
-})
+function Sidebar({
+  projects,
+  activeProject,
+  setActiveProjectId,
+  activeFlowId,
+  onSelectFlow,
+  onAddFlow,
+  onChangeFlowName,
+  nodeTypes = {},
+}: SidebarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isProjectView, setIsProjectView] = useState(false);
 
-function Sidebar({ flows, activeFlowId, onSelectFlow, onAddFlow, onChangeFlowName }: SidebarProps) {
-    const [isClient, setIsClient] = useState(false);
-    const huesCacheRef = useRef<Record<string, number>>({});
+  return (
+    <Panel className={`${lato.className}`}>
+      <div className="sidebar-container">
+        <button
+          onClick={() => setIsOpen((v) => !v)}
+          className="hamburger-button"
+          aria-label="Toggle menu"
+        >
+          <FontAwesomeIcon icon={faBars} size="2xl" />
+        </button>
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
+        {isOpen && (
+          <div className="menu-overlay" onClick={() => setIsOpen(false)} />
+        )}
 
-    const flowIds = flows.map(f => f.id)
+        <div className={`menu-panel ${isOpen ? "open" : "closed"}`}>
+          <div className="menu-header">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="close-button"
+              aria-label="Close menu"
+            >
+              <FontAwesomeIcon icon={faXmark} size="xl" />
+            </button>
+          </div>
 
-    const flowHues = useMemo(() => {
-        if (!isClient) return {};
-
-        const newHues = { ...huesCacheRef.current };
-
-        flows.forEach(flow => {
-            if (!(flow.id in newHues)) {
-                newHues[flow.id] = Math.floor(Math.random() * 361);
-            }
-        });
-
-        const currentFlowIds = new Set(flows.map(f => f.id));
-        Object.keys(newHues).forEach(id => {
-            if (!currentFlowIds.has(id)) {
-                delete newHues[id];
-            }
-        });
-
-        huesCacheRef.current = newHues;
-        return newHues;
-    }, [flowIds, isClient]);
-
-    return (
-        <Panel position="top-left" className={`sidebar-panel ${lato.className}`}>
-            <Menu noOverlay className='sidebar'>
-                {flows.map(flow => (
-                    <div
-                        key={flow.id}
-                        className={`minimap-container ${activeFlowId === flow.id ? 'active' : ''}`}
-                        onClick={() => onSelectFlow(flow.id)}
-                    >
-                        <div onClick={(e) => e.stopPropagation()}>
-                            <EditableHeading
-                                value={flow.name}
-                                onChange={(newName) => onChangeFlowName(flow.id, newName)}
-                                className="minimap-title"
-                                style={{ marginBottom: "5px", textAlign: "center" }}
-                                tag="h4"
-                            />
-                        </div>
-                        <div className="minimap-wrapper" style={{ width: 200, height: 150 }}>
-                            <ReactFlow
-                                nodes={flow.nodes}
-                                edges={flow.edges}
-                                nodeTypes={nodeTypes}
-                                fitView
-                                proOptions={{ hideAttribution: true }}
-                                nodesDraggable={false}
-                                nodesConnectable={false}
-                                elementsSelectable={false}
-                                zoomOnScroll={false}
-                                panOnDrag={false}
-                                zoomOnPinch={false}
-                                zoomOnDoubleClick={false}
-                                panOnScroll={false}
-                            >
-                                <MiniMap
-                                    pannable={true}
-                                    zoomable={true}
-                                    position='bottom-left'
-                                    style={{
-                                        margin: 0,
-                                        background: isClient ? `hsla(${flowHues[flow.id]}, 72%, 70%, 1)` : 'hsla(0, 72%, 70%, 1)',
-                                        borderRadius: "5px",
-                                        cursor: "pointer"
-                                    }}
-                                />
-                            </ReactFlow>
-                        </div>
-                    </div>
-                ))}
-                <button className="add-button" role="button" onClick={onAddFlow}>Add Lynq</button>
-                <div style={{ height: 32 }}></div>
-            </Menu >
-        </Panel >
-    );
+          <div className="menu-content">
+            <FlowsPanel
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              activeProject={activeProject}
+              activeFlowId={activeFlowId}
+              onSelectFlow={onSelectFlow}
+              onAddFlow={onAddFlow}
+              onChangeFlowName={onChangeFlowName}
+              nodeTypes={nodeTypes}
+              setIsProjectView={setIsProjectView}
+              isProjectView={isProjectView}
+            />
+            <ProjectsPanel
+              projects={projects}
+              activeProject={activeProject}
+              setActiveProjectId={setActiveProjectId}
+              setIsProjectView={setIsProjectView}
+              isProjectView={isProjectView}
+            />
+          </div>
+        </div>
+      </div>
+    </Panel>
+  );
 }
 
 export default Sidebar;
