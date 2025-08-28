@@ -1,4 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  KeyboardEvent,
+  ChangeEvent,
+  MouseEvent,
+} from "react";
 
 interface EditableHeadingProps {
   value: string;
@@ -23,7 +30,8 @@ function EditableHeading({
     setTempValue(value);
   }, [value]);
 
-  const handleClick = () => {
+  const handleClick = (e: MouseEvent) => {
+    e.stopPropagation();
     setIsEditing(true);
     setTempValue(value);
   };
@@ -33,7 +41,7 @@ function EditableHeading({
     onChange(tempValue);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       setIsEditing(false);
       onChange(tempValue);
@@ -44,7 +52,7 @@ function EditableHeading({
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTempValue(e.target.value);
   };
 
@@ -58,7 +66,7 @@ function EditableHeading({
   const HeadingTag = tag;
 
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       {isEditing ? (
         <input
           ref={inputRef}
@@ -84,7 +92,7 @@ function EditableHeading({
         />
       ) : (
         <HeadingTag
-          onClick={handleClick}
+          onClick={(e) => handleClick(e)}
           className={className}
           style={{
             ...style,

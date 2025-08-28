@@ -4,7 +4,13 @@ import Tooltip from "./Tooltip";
 import { Panel, useReactFlow, useStoreApi } from "@xyflow/react";
 import { useCallback } from "react";
 
-function FloatingMenu({ flowId }: { flowId: string }) {
+function FloatingMenu({
+  projectId,
+  flowId,
+}: {
+  projectId: string;
+  flowId: string;
+}) {
   const store = useStoreApi();
   const {
     addNodes,
@@ -39,13 +45,13 @@ function FloatingMenu({ flowId }: { flowId: string }) {
 
   const saveWork = useCallback(() => {
     const flow = toObject();
-    localStorage.setItem(`flow-${flowId}`, JSON.stringify(flow));
+    localStorage.setItem(`${projectId}-${flowId}`, JSON.stringify(flow));
   }, [toObject, flowId]);
 
   const restoreWork = useCallback(() => {
     const restoreFlow = async () => {
       let flow: any;
-      const storedFlow = localStorage.getItem(`flow-${flowId}`);
+      const storedFlow = localStorage.getItem(`${projectId}-${flowId}`);
       if (storedFlow) {
         flow = JSON.parse(storedFlow);
       }

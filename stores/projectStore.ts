@@ -1,6 +1,4 @@
 import {
-  Edge,
-  Node,
   OnConnect,
   OnEdgesChange,
   OnNodesChange,
@@ -31,6 +29,7 @@ interface ProjectState {
 
   setActiveProjectId: (projectId: string) => void;
   setActiveFlowId: (flowId: string) => void;
+
   onNodesChange: (
     projectId: string,
     flowId: string,
@@ -46,8 +45,11 @@ interface ProjectState {
     flowId: string,
     connection: Parameters<OnConnect>[0],
   ) => void;
+
+  updateProjectName: (projectId: string, name: string) => void;
   updateFlowName: (projectId: string, flowId: string, name: string) => void;
 
+  addProject: () => void;
   addFlow: (projectId: string) => void;
 }
 export const useProjectStore = create<ProjectState>((set) => ({
@@ -74,6 +76,7 @@ export const useProjectStore = create<ProjectState>((set) => ({
 
   setActiveProjectId: (projectId) =>
     set(() => ({ activeProjectId: projectId })),
+
   setActiveFlowId: (flowId) => set(() => ({ activeFlowId: flowId })),
 
   onNodesChange: (projectId, flowId, changes) => {
@@ -106,6 +109,16 @@ export const useProjectStore = create<ProjectState>((set) => ({
     );
   },
 
+  updateProjectName: (projectId, name) =>
+    set(
+      produce((state) => {
+        const project = state.projects.find(
+          (project: Project) => project.id === projectId,
+        );
+        project.name = name;
+      }),
+    ),
+
   updateFlowName: (projectId, flowId, name) =>
     set(
       produce((state) => {
@@ -114,6 +127,17 @@ export const useProjectStore = create<ProjectState>((set) => ({
         );
         const flow = project.flows.find((flow: FlowData) => flow.id === flowId);
         flow.name = name;
+      }),
+    ),
+
+  addProject: () =>
+    set(
+      produce((state) => {
+        state.projects.push({
+          id: `project${state.projects.length + 1}`,
+          name: `Project ${state.projects.length + 1}`,
+          flows: [{ id: "flow1", name: "1", nodes: [], edges: [] }],
+        });
       }),
     ),
 

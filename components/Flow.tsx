@@ -1,12 +1,8 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback } from "react";
 import {
   ReactFlow,
-  addEdge,
   Background,
   BackgroundVariant,
-  useNodesState,
-  useEdgesState,
-  OnConnect,
   Node,
   NodeTypes,
   Edge,
@@ -75,7 +71,7 @@ function Flow({ project, flowId, flowData }: FlowProps) {
             variant={BackgroundVariant.Dots}
             id={flowId}
           />
-          <FloatingMenu flowId={flowData.id} />
+          <FloatingMenu projectId={project.id} flowId={flowData.id} />
         </ReactFlow>
       </div>
     )

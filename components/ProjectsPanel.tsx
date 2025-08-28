@@ -1,9 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { Project } from "@/app/page";
+import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./styles/projectsPanel.css";
 import { useProjectStore } from "@/stores/projectStore";
+import EditableHeading from "./EditableHeading";
 
 interface ProjectsPanelProps {
   setIsProjectView: (v: boolean) => void;
@@ -14,7 +14,13 @@ function ProjectsPanel({
   setIsProjectView,
   isProjectView,
 }: ProjectsPanelProps) {
-  const { projects, activeProjectId, setActiveProjectId } = useProjectStore();
+  const {
+    projects,
+    activeProjectId,
+    setActiveProjectId,
+    addProject,
+    updateProjectName,
+  } = useProjectStore();
 
   const activeProject =
     projects.find((project) => project.id === activeProjectId) || projects[0];
@@ -44,9 +50,22 @@ function ProjectsPanel({
               setIsProjectView(false);
             }}
           >
-            <h3>{project.name}</h3>
+            <EditableHeading
+              value={project.name}
+              onChange={(newName) => updateProjectName(project.id, newName)}
+              className="minimap-title"
+              style={{ marginBottom: "5px", textAlign: "center" }}
+              tag="h4"
+            />
           </div>
         ))}
+        <button
+          className="add-button"
+          role="button"
+          onClick={() => addProject()}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
       </div>
     </div>
   );
