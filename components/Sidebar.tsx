@@ -10,11 +10,7 @@ import "./styles/sidebar.css";
 
 const lato = Lato({ weight: "400" });
 
-interface SidebarProps {
-  projects: Project[];
-}
-
-function Sidebar({ projects }: SidebarProps) {
+function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProjectView, setIsProjectView] = useState(false);
 

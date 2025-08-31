@@ -35,7 +35,7 @@ function MainApp() {
           )),
       )}
 
-      <Sidebar projects={projects} />
+      <Sidebar />
     </div>
   );
 }
