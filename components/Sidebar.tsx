@@ -3,17 +3,18 @@ import { Panel } from "@xyflow/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Lato } from "next/font/google";
-import { Project } from "@/app/page";
 import FlowsPanel from "./FlowsPanel";
 import ProjectsPanel from "./ProjectsPanel";
 import "./styles/sidebar.css";
+import { useAuthenticator } from "@aws-amplify/ui-react-core";
+import { signInWithRedirect, signOut } from "@aws-amplify/auth";
 
 const lato = Lato({ weight: "400" });
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProjectView, setIsProjectView] = useState(false);
-
+  const { user } = useAuthenticator();
   return (
     <Panel className={`${lato.className}`}>
       <div className="sidebar-container">
@@ -38,6 +39,15 @@ function Sidebar() {
             >
               <FontAwesomeIcon icon={faXmark} size="xl" />
             </button>
+            {user !== undefined ? (
+              <button onClick={() => signOut()}>Sign out</button>
+            ) : (
+              <button
+                onClick={() => signInWithRedirect({ provider: "Google" })}
+              >
+                Sign in with Google
+              </button>
+            )}
           </div>
 
           <div className="menu-content">
