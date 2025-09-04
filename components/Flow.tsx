@@ -9,8 +9,7 @@ import {
 } from "@xyflow/react";
 import { EditorNode } from "@/components/EditorNode";
 import FloatingMenu from "@/components/FloatingMenu";
-import { Project } from "@/app/page";
-import { useProjectStore } from "@/stores/projectStore";
+import { Project, useProjectStore } from "@/stores/projectStore";
 
 export const nodeTypes = { editorNode: EditorNode } satisfies NodeTypes;
 
@@ -28,10 +27,10 @@ interface FlowProps {
 }
 
 function Flow({ project, flowId, flowData }: FlowProps) {
-  const { onNodesChange, onEdgesChange, onConnect, activeFlowId } =
+  const { onNodesChange, onEdgesChange, onConnect, activeItemId } =
     useProjectStore();
   const { nodes, edges } = flowData;
-  const isActive = flowId === activeFlowId;
+  const isActive = flowId === activeItemId;
 
   const handleNodesChange = useCallback(
     (changes: Parameters<typeof onNodesChange>[2]) => {

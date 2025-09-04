@@ -1,0 +1,271 @@
+.timeline-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    sans-serif;
+}
+
+.timeline {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  padding: 40px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #e5e7eb;
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  opacity: 1;
+  animation: fadeIn 0.5s ease;
+  transition: all 0.3s ease;
+}
+
+.timeline-item.dragging {
+  opacity: 0.4;
+  transform: scale(0.95);
+}
+
+.timeline-item.drag-over {
+  padding-top: 80px;
+}
+
+.timeline-item.left .timeline-content {
+  margin-right: 40px;
+  margin-left: auto;
+}
+
+.timeline-item.right .timeline-content {
+  margin-left: 40px;
+  margin-right: auto;
+}
+
+.timeline-item.right {
+  flex-direction: row-reverse;
+}
+
+.timeline-item.right .timeline-date-container {
+  margin-right: 20px;
+  text-align: right;
+}
+
+.timeline-item.left .timeline-date-container {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.timeline-content {
+  position: relative;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: grab;
+  flex-basis: 50%;
+  max-width: calc(50% - 61px);
+}
+
+.timeline-content:hover {
+  border-color: #d1d5db;
+}
+
+.drag-handle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 20px;
+  cursor: grab;
+  user-select: none;
+  line-height: 0.5;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.remove-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-button:hover {
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: #4b5563;
+  border: 4px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(75, 85, 99, 0.1);
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+  background: #6b7280;
+  box-shadow: 0 0 0 5px rgba(107, 114, 128, 0.25);
+}
+
+.timeline-date-container {
+  flex-basis: 50%;
+  padding-right: 20px;
+}
+
+.timeline-item.left .timeline-date-container {
+  text-align: right;
+  margin-right: 20px;
+}
+
+.timeline-item.right .timeline-date-container {
+  text-align: left;
+  margin-left: 40px;
+}
+
+.editable-field {
+  cursor: text;
+  padding: 2px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.editable-field:hover {
+  background: #7878780d;
+}
+
+.timeline-date {
+  display: inline-block;
+  font-size: 14px;
+  color: #787878;
+  font-weight: 500;
+}
+
+.timeline-title {
+  font-size: 24px;
+  color: #1f2937;
+  margin: 8px 0;
+  font-weight: 600;
+}
+
+.timeline-subtitle {
+  font-size: 18px;
+  color: #787878;
+  margin: 8px 0;
+  font-weight: 400;
+}
+
+.timeline-detail {
+  font-size: 16px;
+  color: #787878;
+}
+
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #4b5563;
+  border-radius: 4px;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  background: white;
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    align-items: flex-start;
+  }
+
+  .timeline-line {
+    left: 30px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    flex-direction: row !important;
+  }
+
+  .timeline-item.right .timeline-date-container {
+    margin-right: auto;
+  }
+
+  .timeline-item.left .timeline-date-container {
+    margin-left: auto;
+  }
+
+  .timeline-item .timeline-content {
+    margin-left: 60px;
+    margin-right: 0;
+  }
+
+  .timeline-item .timeline-dot {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .timeline-item .drag-handle,
+  .timeline-item .remove-button {
+    right: 10px;
+  }
+
+  .timeline-date-container {
+    display: none;
+  }
+}

@@ -3,9 +3,9 @@ import { Panel } from "@xyflow/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Lato } from "next/font/google";
-import FlowsPanel from "./FlowsPanel";
+import ItemsPanel from "./ItemsPanel";
 import ProjectsPanel from "./ProjectsPanel";
-import "./styles/sidebar.css";
+import "@/styles/sidebar.css";
 import { useAuthenticator } from "@aws-amplify/ui-react-core";
 import { signInWithRedirect, signOut } from "@aws-amplify/auth";
 
@@ -51,7 +51,7 @@ function Sidebar() {
           </div>
 
           <div className="menu-content">
-            <FlowsPanel
+            <ItemsPanel
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               setIsProjectView={setIsProjectView}

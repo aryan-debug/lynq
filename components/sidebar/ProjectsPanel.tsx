@@ -1,9 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
-import "./styles/projectsPanel.css";
+import "@/styles/projectsPanel.css";
 import { useProjectStore } from "@/stores/projectStore";
-import EditableHeading from "./EditableHeading";
+import EditableHeading from "../EditableHeading";
 
 interface ProjectsPanelProps {
   setIsProjectView: (v: boolean) => void;

@@ -2,9 +2,10 @@
 
 import { ReactFlowProvider } from "@xyflow/react";
 import Flow from "@/components/Flow";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import "@xyflow/react/dist/style.css";
 import { useProjectStore } from "@/stores/projectStore";
+import Timeline from "@/components/Timeline";
 
 export type Project = {
   id: string;
@@ -28,13 +29,20 @@ function MainApp() {
       {projects.map(
         (project) =>
           project.id === activeProjectId &&
-          project.flows.map((flow) => (
-            <ReactFlowProvider key={flow.id}>
-              <Flow project={project} flowId={flow.id} flowData={flow} />
-            </ReactFlowProvider>
-          )),
+          project.items.map((item) => {
+            if (item.type === "flow") {
+              return (
+                <ReactFlowProvider key={item.id}>
+                  <Flow project={project} flowId={item.id} flowData={item} />
+                </ReactFlowProvider>
+              );
+            }
+            if (item.type === "timeline") {
+              return <Timeline key={item.id} timelineId={item.id} />;
+            }
+            return null;
+          }),
       )}
-
       <Sidebar />
     </div>
   );

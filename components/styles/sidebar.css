@@ -66,5 +66,5 @@
   display: flex;
   height: calc(100% - 73px);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
