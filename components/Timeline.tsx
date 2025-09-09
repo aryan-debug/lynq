@@ -4,7 +4,7 @@ import styles from "@/styles/timeline.module.css";
 import TimelineEventComponent from "./TimelineItem";
 import { useProjectStore } from "@/stores/projectStore";
 import { useShallow } from "zustand/react/shallow";
-import { Timeline } from "@/types/project";
+import { Timeline as TimelineType } from "@/types/project";
 
 interface TimelineProps {
   timelineId: string;
@@ -58,7 +58,7 @@ function Timeline({ timelineId }: TimelineProps) {
       return;
     }
 
-    const events = (activeItem as Timeline).events;
+    const events = (activeItem as TimelineType).events;
     const draggedContent = events[draggedItem];
     const newEvents = [...events];
 
@@ -83,7 +83,7 @@ function Timeline({ timelineId }: TimelineProps) {
       <div className={styles.timelineContainer}>
         <div className={styles.timeline}>
           <div className={styles.timelineLine}></div>
-          {(activeItem as Timeline).events.map((event, index) => (
+          {(activeItem as TimelineType).events.map((event, index) => (
             <TimelineEventComponent
               key={event.id}
               timelineId={timelineId}
