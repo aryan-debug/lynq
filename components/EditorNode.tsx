@@ -1,7 +1,7 @@
 import { Handle, NodeResizer, Position, useReactFlow } from "@xyflow/react";
 import { useState } from "react";
 import Editor from "./Editor";
-import "./styles/editor_node.css";
+import styles from "@/styles/editorNode.module.css";
 
 export function EditorNode({
   id,
@@ -38,7 +38,7 @@ export function EditorNode({
     <>
       <NodeResizer minWidth={50} minHeight={30} isVisible={selected} />
       <div
-        className="editor-node"
+        className={styles.editorNode}
         style={{
           outline: isEditing ? "1.5px solid black" : "1px solid black",
         }}

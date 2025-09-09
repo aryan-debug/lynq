@@ -1,6 +1,7 @@
-import { Timeline, useProjectStore } from "@/stores/projectStore";
+import { useProjectStore } from "@/stores/projectStore";
 import EditableHeading from "../EditableHeading";
-import "../styles/projectsPanel.css";
+import styles from "@/styles/timeline.module.css";
+import { Timeline } from "@/types/project";
 
 interface TimelineContainerProps {
   item: Timeline;
@@ -12,12 +13,12 @@ function TimelineContainer({ item }: TimelineContainerProps) {
   return (
     <div
       onClick={() => setActiveItemId(item.id)}
-      className={`minimap-container ${activeItemId === item.id ? "active" : ""}`}
+      className={`${styles.minimapContainer} ${activeItemId === item.id ? styles.active : ""}`}
     >
       <EditableHeading
         value={item.name}
         onChange={() => {}}
-        className="minimap-title"
+        className={styles.minimapTitle}
         style={{ marginBottom: "5px", textAlign: "center" }}
         tag="h4"
       />

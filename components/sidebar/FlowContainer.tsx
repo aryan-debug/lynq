@@ -1,8 +1,10 @@
-import { FlowData, ProjectItem, useProjectStore } from "@/stores/projectStore";
+import { useProjectStore } from "@/stores/projectStore";
 import { ReactFlow, MiniMap } from "@xyflow/react";
 import EditableHeading from "../EditableHeading";
 import { nodeTypes } from "../Flow";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FlowData, ProjectItem } from "@/types/project";
+import styles from "@/styles/flowsPanel.module.css";
 
 interface FlowContainerProps {
   item: FlowData;
@@ -44,7 +46,7 @@ function FlowContainer({ item }: FlowContainerProps) {
   return (
     <div
       key={item.id}
-      className={`minimap-container ${activeFlowId === item.id ? "active" : ""}`}
+      className={`${styles.minimapContainer} ${activeFlowId === item.id ? styles.active : ""}`}
       onClick={() => setActiveFlowId(item.id)}
     >
       <div onClick={(e) => e.stopPropagation()}>
@@ -53,12 +55,12 @@ function FlowContainer({ item }: FlowContainerProps) {
           onChange={(newName) =>
             updateFlowName(activeProject.id, item.id, newName)
           }
-          className="minimap-title"
+          className={styles.minimapTitle}
           style={{ marginBottom: "5px", textAlign: "center" }}
           tag="h4"
         />
       </div>
-      <div className="minimap-wrapper">
+      <div className={styles.minimapWrapper}>
         <ReactFlow
           nodes={item.nodes}
           edges={item.edges}

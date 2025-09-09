@@ -9,7 +9,8 @@ import {
 } from "@xyflow/react";
 import { EditorNode } from "@/components/EditorNode";
 import FloatingMenu from "@/components/FloatingMenu";
-import { Project, useProjectStore } from "@/stores/projectStore";
+import { useProjectStore } from "@/stores/projectStore";
+import { Project } from "@/types/project";
 
 export const nodeTypes = { editorNode: EditorNode } satisfies NodeTypes;
 
@@ -70,7 +71,7 @@ function Flow({ project, flowId, flowData }: FlowProps) {
             variant={BackgroundVariant.Dots}
             id={flowId}
           />
-          <FloatingMenu projectId={project.id} flowId={flowData.id} />
+          <FloatingMenu />
         </ReactFlow>
       </div>
     )

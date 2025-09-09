@@ -1,4 +1,4 @@
-.timeline-container {
+.timelineContainer {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -16,7 +16,7 @@
   padding: 40px 0;
 }
 
-.timeline-line {
+.timelineLine {
   position: absolute;
   left: 50%;
   top: 0;
@@ -26,7 +26,7 @@
   transform: translateX(-50%);
 }
 
-.timeline-item {
+.timelineItem {
   position: relative;
   display: flex;
   align-items: center;
@@ -36,40 +36,40 @@
   transition: all 0.3s ease;
 }
 
-.timeline-item.dragging {
+.timelineItem.dragging {
   opacity: 0.4;
   transform: scale(0.95);
 }
 
-.timeline-item.drag-over {
+.timelineItem.dragOver {
   padding-top: 80px;
 }
 
-.timeline-item.left .timeline-content {
+.timelineItem.left .timelineContent {
   margin-right: 40px;
   margin-left: auto;
 }
 
-.timeline-item.right .timeline-content {
+.timelineItem.right .timelineContent {
   margin-left: 40px;
   margin-right: auto;
 }
 
-.timeline-item.right {
+.timelineItem.right {
   flex-direction: row-reverse;
 }
 
-.timeline-item.right .timeline-date-container {
+.timelineItem.right .timelineDateContainer {
   margin-right: 20px;
   text-align: right;
 }
 
-.timeline-item.left .timeline-date-container {
+.timelineItem.left .timelineDateContainer {
   margin-left: 20px;
   text-align: left;
 }
 
-.timeline-content {
+.timelineContent {
   position: relative;
   background: white;
   padding: 25px;
@@ -82,11 +82,11 @@
   max-width: calc(50% - 61px);
 }
 
-.timeline-content:hover {
+.timelineContent:hover {
   border-color: #d1d5db;
 }
 
-.drag-handle {
+.dragHandle {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -98,11 +98,11 @@
   line-height: 0.5;
 }
 
-.drag-handle:active {
+.dragHandle:active {
   cursor: grabbing;
 }
 
-.remove-button {
+.removeButton {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -121,12 +121,12 @@
   justify-content: center;
 }
 
-.remove-button:hover {
+.removeButton:hover {
   color: #1f2937;
   background: #f3f4f6;
 }
 
-.timeline-dot {
+.timelineDot {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -140,65 +140,65 @@
   transition: all 0.3s ease;
 }
 
-.timeline-item:hover .timeline-dot {
+.timelineItem:hover .timelineDot {
   background: #6b7280;
   box-shadow: 0 0 0 5px rgba(107, 114, 128, 0.25);
 }
 
-.timeline-date-container {
+.timelineDateContainer {
   flex-basis: 50%;
   padding-right: 20px;
 }
 
-.timeline-item.left .timeline-date-container {
+.timelineItem.left .timelineDateContainer {
   text-align: right;
   margin-right: 20px;
 }
 
-.timeline-item.right .timeline-date-container {
+.timelineItem.right .timelineDateContainer {
   text-align: left;
   margin-left: 40px;
 }
 
-.editable-field {
+.editableField {
   cursor: text;
   padding: 2px;
   border-radius: 4px;
   transition: background 0.2s ease;
 }
 
-.editable-field:hover {
+.editableField:hover {
   background: #7878780d;
 }
 
-.timeline-date {
+.timelineDate {
   display: inline-block;
   font-size: 14px;
   color: #787878;
   font-weight: 500;
 }
 
-.timeline-title {
+.timelineTitle {
   font-size: 24px;
   color: #1f2937;
   margin: 8px 0;
   font-weight: 600;
 }
 
-.timeline-subtitle {
+.timelineSubtitle {
   font-size: 18px;
   color: #787878;
   margin: 8px 0;
   font-weight: 400;
 }
 
-.timeline-detail {
+.timelineDetail {
   font-size: 16px;
   color: #787878;
 }
 
-.edit-input,
-.edit-textarea {
+.editInput,
+.editTextarea {
   width: 100%;
   padding: 8px;
   border: 2px solid #4b5563;
@@ -209,10 +209,42 @@
   background: white;
 }
 
-.edit-textarea {
+.editTextarea {
   resize: vertical;
   min-height: 80px;
   line-height: 1.6;
+}
+
+.minimapContainer {
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.minimapContainer:hover {
+  border-color: #4b5563;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+.minimapContainer.active {
+  border-color: #4b5563;
+  background-color: #7878780d;
+}
+.minimapTitle {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  color: #1f2937;
+}
+.minimapTitle input {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
 }
 
 @keyframes fadeIn {
@@ -231,37 +263,37 @@
     align-items: flex-start;
   }
 
-  .timeline-line {
+  .timelineLine {
     left: 30px;
   }
 
-  .timeline-item {
+  .timelineItem {
     width: 100%;
     flex-direction: row !important;
   }
 
-  .timeline-item.right .timeline-date-container {
+  .timelineItem.right .timelineDateContainer {
     margin-right: auto;
   }
 
-  .timeline-item.left .timeline-date-container {
+  .timelineItem.left .timelineDateContainer {
     margin-left: auto;
   }
 
-  .timeline-item .timeline-content {
+  .timelineItem .timelineContent {
     margin-left: 60px;
     margin-right: 0;
   }
 
-  .timeline-item .timeline-dot {
+  .timelineItem .timelineDot {
     position: absolute;
     left: 30px;
     top: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .timeline-item .drag-handle,
-  .timeline-item .remove-button {
+  .timelineItem .dragHandle,
+  .timelineItem .removeButton {
     right: 10px;
   }
 

@@ -1,19 +1,13 @@
 import { ReactNode, useState } from "react";
-import "./styles/tooltip.css";
+import styles from "@/styles/tooltip.module.css";
 
 interface TooltipProps {
   children: ReactNode;
   text: string;
-  position: "top" | "bottom" | "left" | "right";
   delay?: number;
 }
 
-function Tooltip({
-  children,
-  text,
-  position = "top",
-  delay = 300,
-}: TooltipProps) {
+function Tooltip({ children, text, delay = 300 }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>();
 
@@ -32,20 +26,24 @@ function Tooltip({
     setIsVisible(false);
   };
 
-  const tooltipClasses = ["tooltip", position, isVisible ? "visible" : ""]
+  const tooltipClasses = [
+    `${styles.tooltip}`,
+    styles.top,
+    isVisible ? styles.visible : "",
+  ]
     .filter(Boolean)
     .join(" ");
 
   return (
     <div
-      className="tooltip-container"
+      className={styles.tooltipContainer}
       onMouseEnter={showTooltip}
       onMouseLeave={hideTooltip}
     >
       {children}
       <div className={tooltipClasses}>
         {text}
-        <div className={"tooltip-arrow"}></div>
+        <div className={styles.tooltipArrow}></div>
       </div>
     </div>
   );

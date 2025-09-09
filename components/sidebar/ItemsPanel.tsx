@@ -5,7 +5,7 @@ import {
   faPlus,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import "@/styles/flowsPanel.css";
+import styles from "@/styles/flowsPanel.module.css";
 import { useProjectStore } from "@/stores/projectStore";
 import FlowContainer from "./FlowContainer";
 import TimelineContainer from "./TimelineContainer";
@@ -55,19 +55,19 @@ function ItemsPanel({
   return (
     <>
       <div
-        className={`back-button-column${isProjectView ? " closed" : ""}`}
+        className={`${styles.backButtonColumn} ${isProjectView ? styles.closed : ""}`}
         onClick={() => setIsProjectView(true)}
       >
-        <div className="back-button-inner">
+        <div className={styles.backButtonInner}>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
           <h3 style={{ transform: "rotate(-90deg)" }}>Projects</h3>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
         </div>
       </div>
       <div
-        className={`flows-panel ${isProjectView ? "slide-out" : "slide-in"}`}
+        className={`${styles.flowsPanel} ${isProjectView ? styles.slideOut : styles.slideIn}`}
       >
-        <div className="sidebar-content">
+        <div className={styles.sidebarContent}>
           <div>
             {activeProject.items.map((item) => {
               if (item.type === "flow") {
@@ -77,23 +77,25 @@ function ItemsPanel({
                 return <TimelineContainer key={item.id} item={item} />;
               }
             })}
-            <div className="add-button-container">
+            <div className={styles.addButtonContainer}>
               <button
-                className="add-button"
+                className={styles.addButton}
                 role="button"
                 onClick={handleAddFlow}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
-              <div className="dropdown-wrapper">
+              <div className={styles.dropdownWrapper}>
                 <button
-                  className="dropdown-button"
+                  className={styles.dropdownButton}
                   role="button"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
                   <FontAwesomeIcon icon={faChevronDown} />
                 </button>
-                <div className={`dropdown-menu ${showDropdown ? "show" : ""}`}>
+                <div
+                  className={`${styles.dropdownMenu} ${showDropdown ? styles.show : ""}`}
+                >
                   <button onClick={handleAddFlow}>Add Flow</button>
                   <button onClick={handleAddTimeline}>Add Timeline</button>
                 </div>

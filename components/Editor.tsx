@@ -3,7 +3,7 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
-import "./styles/editor.css";
+import styles from "@/styles/editor.module.css";
 
 interface EditorProps {
   content: string;
@@ -20,7 +20,7 @@ function Editor({ content, editable, onSave, onContentChange }: EditorProps) {
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        class: "editor",
+        class: styles.editor,
       },
     },
     onUpdate: ({ editor }) => onContentChange(editor.getHTML()),
@@ -52,7 +52,7 @@ function Editor({ content, editable, onSave, onContentChange }: EditorProps) {
 
   return (
     <div
-      className={editable ? "nodrag nowheel editing" : "display-mode"}
+      className={editable ? `nodrag nowheel ${styles.editing}` : "display-mode"}
       onPointerDown={editable ? (e) => e.stopPropagation() : undefined}
       onKeyDown={handleKeyDown}
       onBlur={editable ? onSave : undefined}

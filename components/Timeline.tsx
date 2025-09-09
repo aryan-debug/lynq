@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useRef } from "react";
-import "./styles/timeline.css";
+import styles from "@/styles/timeline.module.css";
 import TimelineEventComponent from "./TimelineItem";
-import { Timeline, useProjectStore } from "@/stores/projectStore";
+import { useProjectStore } from "@/stores/projectStore";
 import { useShallow } from "zustand/react/shallow";
+import { Timeline } from "@/types/project";
 
 interface TimelineProps {
   timelineId: string;
@@ -79,9 +80,9 @@ function Timeline({ timelineId }: TimelineProps) {
 
   return (
     activeItemId === timelineId && (
-      <div className="timeline-container">
-        <div className="timeline">
-          <div className="timeline-line"></div>
+      <div className={styles.timelineContainer}>
+        <div className={styles.timeline}>
+          <div className={styles.timelineLine}></div>
           {(activeItem as Timeline).events.map((event, index) => (
             <TimelineEventComponent
               key={event.id}
@@ -98,7 +99,7 @@ function Timeline({ timelineId }: TimelineProps) {
             />
           ))}
         </div>
-        <div className="floating-menu">
+        <div className={styles.floatingMenu}>
           <button
             onClick={() => addEvent(activeProjectId, timelineId)}
             className="add-button"

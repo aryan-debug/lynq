@@ -1,7 +1,7 @@
-.sidebar-container {
+.sidebarContainer {
   position: relative;
 }
-.hamburger-button {
+.hamburgerButton {
   position: fixed;
   top: 16px;
   left: 16px;
@@ -14,7 +14,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.menu-overlay {
+.menuOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -24,7 +24,7 @@
   z-index: 40;
   transition: opacity 0.3s;
 }
-.menu-panel {
+.menuPanel {
   position: fixed;
   top: 0;
   height: 100vh;
@@ -34,15 +34,15 @@
   z-index: 50;
   overflow-y: auto;
 }
-.menu-panel.open {
+.menuPanel.open {
   left: 0;
   transition: left 0.3s ease-in;
 }
-.menu-panel.closed {
+.menuPanel.closed {
   left: -500px;
   transition: left 0.3s ease-in;
 }
-.menu-header {
+.menuHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +53,7 @@
   top: 0;
   z-index: 10;
 }
-.close-button {
+.closeButton {
   color: #787878;
   padding: 4px 8px;
   background: none;
@@ -62,7 +62,7 @@
   cursor: pointer;
   width: fit-content;
 }
-.menu-content {
+.menuContent {
   display: flex;
   height: calc(100% - 73px);
   position: relative;

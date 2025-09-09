@@ -5,8 +5,6 @@ import type { Project } from "@/types/project";
 export const saveProjects = async (projects: Project[]): Promise<void> => {
   try {
     const user = await getCurrentUser();
-    const userId = user.userId;
-
     const projectData = JSON.stringify(projects, null, 2);
 
     uploadData({
@@ -19,16 +17,13 @@ export const saveProjects = async (projects: Project[]): Promise<void> => {
 
     console.log("Projects saved successfully");
   } catch (error) {
-    console.error("Save failed:", error);
+    localStorage.setItem("projects", JSON.stringify(projects));
   }
 };
 
 export const loadProjects = async (): Promise<Project[]> => {
   try {
     const user = await getCurrentUser();
-    const userId = user.userId;
-    const key = `projects/${userId}/projects.json`;
-
     const result = await downloadData({
       path: ({ identityId }) => `projects/${identityId}/projects.json`,
     }).result;
@@ -36,7 +31,32 @@ export const loadProjects = async (): Promise<Project[]> => {
 
     return JSON.parse(projectData);
   } catch (error) {
-    console.error("Load failed:", error);
-    return [];
+    const projects = localStorage.getItem("projects");
+    if (projects) {
+      return JSON.parse(projects);
+    }
+    return [
+      {
+        id: "project1",
+        name: "Project 1",
+        items: [
+          { type: "flow", id: "flow1", name: "People", nodes: [], edges: [] },
+          {
+            type: "timeline",
+            id: "timeline1",
+            name: "Timeline",
+            events: [
+              {
+                id: Date.now().toString(),
+                date: new Date().toISOString().split("T")[0],
+                title: "New Event",
+                subtitle: "Event subtitle",
+                detail: "Event details go here...",
+              },
+            ],
+          },
+        ],
+      },
+    ];
   }
 };

@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { TimelineEvent, useProjectStore } from "@/stores/projectStore";
+import { useProjectStore } from "@/stores/projectStore";
+import { TimelineEvent } from "@/types/project";
+import styles from "@/styles/timeline.module.css";
 
 interface EditableFieldProps {
   event: TimelineEvent;
@@ -60,7 +62,7 @@ function EditableField({
           }
         }}
         autoFocus
-        className={`edit-input ${isTextArea ? "edit-textarea" : ""}`}
+        className={`${styles.editInput} ${isTextArea ? styles.editTextarea : ""}`}
       />
     );
   }
@@ -68,16 +70,16 @@ function EditableField({
   return (
     <div
       onClick={() => onEditStart(event.id, field)}
-      className="editable-field"
+      className={styles.editableField}
     >
       {field === "date" ? (
-        <span className="timeline-date">{event[field]}</span>
+        <span className={styles.timelineDate}>{event[field]}</span>
       ) : field === "title" ? (
-        <h3 className="timeline-title">{event[field]}</h3>
+        <h3 className={styles.timelineTitle}>{event[field]}</h3>
       ) : field === "subtitle" ? (
-        <h4 className="timeline-subtitle">{event[field]}</h4>
+        <h4 className={styles.timelineSubtitle}>{event[field]}</h4>
       ) : (
-        <p className="timeline-detail">{event[field]}</p>
+        <p className={styles.timelineDetail}>{event[field]}</p>
       )}
     </div>
   );

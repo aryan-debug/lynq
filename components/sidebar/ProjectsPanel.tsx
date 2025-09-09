@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
-import "@/styles/projectsPanel.css";
+import styles from "@/styles/projectsPanel.module.css";
 import { useProjectStore } from "@/stores/projectStore";
 import EditableHeading from "../EditableHeading";
 
@@ -26,9 +26,11 @@ function ProjectsPanel({
     projects.find((project) => project.id === activeProjectId) || projects[0];
 
   return (
-    <div className={`project-panel ${isProjectView ? "show" : ""}`}>
+    <div
+      className={`${styles.projectPanel} ${isProjectView ? styles.show : ""}`}
+    >
       <button
-        className="close-button"
+        className={styles.closeButton}
         onClick={() => setIsProjectView(false)}
         aria-label="Back to flows"
       >
@@ -40,10 +42,10 @@ function ProjectsPanel({
         Back
       </button>
       <h1>Projects</h1>
-      <div className="project-list">
+      <div className={styles.projectList}>
         {projects.map((project) => (
           <div
-            className={`project-item ${project.id === activeProject.id ? "active" : ""}`}
+            className={`${styles.projectItem} ${project.id === activeProject.id ? styles.active : ""}`}
             key={project.id}
             onClick={() => {
               setActiveProjectId(project.id);
@@ -53,14 +55,14 @@ function ProjectsPanel({
             <EditableHeading
               value={project.name}
               onChange={(newName) => updateProjectName(project.id, newName)}
-              className="minimap-title"
+              className={styles.minimapTitle}
               style={{ marginBottom: "5px", textAlign: "center" }}
               tag="h4"
             />
           </div>
         ))}
         <button
-          className="add-button"
+          className={styles.addButton}
           role="button"
           onClick={() => addProject()}
         >

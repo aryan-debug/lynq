@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import EditableField from "./EditableField";
-import { TimelineEvent, useProjectStore } from "@/stores/projectStore";
+import { useProjectStore } from "@/stores/projectStore";
 import { useShallow } from "zustand/react/shallow";
+import { TimelineEvent } from "@/types/project";
+import styles from "@/styles/timeline.module.css";
 
 interface TimelineEventComponentProps {
   timelineId: string;
@@ -83,15 +85,15 @@ function TimelineEventComponent({
 
   return (
     <div
-      className={`timeline-item ${index % 2 === 0 ? "left" : "right"} ${
-        dragOverIndex === index ? "drag-over" : ""
-      } ${draggedItem === index ? "dragging" : ""}`}
+      className={`${styles.timelineItem} ${index % 2 === 0 ? styles.left : styles.right} ${
+        dragOverIndex === index ? styles.dragOver : ""
+      } ${draggedItem === index ? styles.dragging : ""}`}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className="timeline-date-container">
+      <div className={styles.timelineDateContainer}>
         <EditableField
           event={event}
           field="date"
@@ -102,17 +104,17 @@ function TimelineEventComponent({
           timelineId={timelineId}
         />
       </div>
-      <div className="timeline-dot"></div>
+      <div className={styles.timelineDot}></div>
       <div
-        className="timeline-content"
+        className={styles.timelineContent}
         draggable
         onDragStart={handleDragStart}
         onDragEnd={onDragEnd}
       >
-        <div className="drag-handle">⋮⋮</div>
+        <div className={styles.dragHandle}>⋮⋮</div>
         <button
           onClick={() => removeEvent(activeProjectId, timelineId, event.id)}
-          className="remove-button"
+          className={styles.removeButton}
           title="Remove item"
           aria-label="Remove timeline item"
         >

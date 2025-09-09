@@ -1,4 +1,4 @@
-.back-button-column {
+.backButtonColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,10 +17,10 @@
   z-index: 5;
   transition: transform 0.3s ease-in-out;
 }
-.back-button-column.closed {
+.backButtonColumn.closed {
   transform: translateX(-100%);
 }
-.back-button-inner {
+.backButtonInner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,11 +31,11 @@
     transform 0.3s ease-in-out,
     color 0.3s ease-in-out;
 }
-.back-button-column:hover .back-button-inner {
+.backButtonColumn:hover .backButtonInner {
   transform: translateX(-5px);
   color: #000;
 }
-.flows-panel {
+.flowsPanel {
   position: absolute;
   top: 0;
   left: 0;
@@ -46,23 +46,23 @@
   transition: transform 0.5s ease-in-out;
   will-change: transform;
 }
-.flows-panel.slide-in {
+.flowsPanel.slideIn {
   transform: translateX(0);
 }
-.flows-panel.slide-out {
+.flowsPanel.slideOut {
   transform: translateX(100%);
 }
-.sidebar-content {
+.sidebarContent {
   flex: 1;
   padding: 16px;
   padding-left: 76px;
   overflow-y: auto;
   transition: padding-left 0.3s ease-in-out;
 }
-.back-button-column.closed + .sidebar-content {
+.backButtonColumn.closed + .sidebarContent {
   padding-left: 16px;
 }
-.minimap-container {
+.minimapContainer {
   margin-bottom: 16px;
   padding: 12px;
   border: 2px solid #e5e7eb;
@@ -70,22 +70,22 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.minimap-container:hover {
+.minimapContainer:hover {
   border-color: #4b5563;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
 }
-.minimap-container.active {
+.minimapContainer.active {
   border-color: #4b5563;
   background-color: #7878780d;
 }
-.minimap-title {
+.minimapTitle {
   margin: 0 0 8px 0;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
   color: #1f2937;
 }
-.minimap-title input {
+.minimapTitle input {
   border: 1px solid #d1d5db;
   border-radius: 4px;
   padding: 2px 6px;
@@ -93,7 +93,7 @@
   text-align: center;
   width: 100%;
 }
-.minimap-wrapper {
+.minimapWrapper {
   width: 200px;
   height: 150px;
   margin: 0 auto;
@@ -101,7 +101,7 @@
   overflow: hidden;
 }
 
-.add-button-container {
+.addButtonContainer {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -109,7 +109,7 @@
   margin-top: 16px;
 }
 
-.add-button {
+.addButton {
   width: auto;
   padding: 12px;
   color: black;
@@ -122,15 +122,15 @@
   width: 100%;
   flex: 1;
 }
-.add-button:hover {
+.addButton:hover {
   background-color: #dbdada;
 }
 
-.dropdown-wrapper {
+.dropdownWrapper {
   position: relative;
 }
 
-.dropdown-button {
+.dropdownButton {
   padding: 12px 10px;
   background-color: #f3f4f6;
   color: #6b7280;
@@ -140,12 +140,12 @@
   transition: all 0.2s;
 }
 
-.dropdown-button:hover {
+.dropdownButton:hover {
   background-color: #dbdada;
   color: #4b5563;
 }
 
-.dropdown-menu {
+.dropdownMenu {
   position: absolute;
   top: 100%;
   right: 0;
@@ -161,13 +161,13 @@
   transition: all 0.3s ease;
 }
 
-.dropdown-menu.show {
+.dropdownMenu.show {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
 }
 
-.dropdown-menu button {
+.dropdownMenu button {
   display: block;
   width: 100%;
   padding: 10px 16px;
@@ -178,14 +178,14 @@
   transition: background-color 0.2s;
 }
 
-.dropdown-menu button:first-child {
+.dropdownMenu button:first-child {
   border-radius: 6px 6px 0 0;
 }
 
-.dropdown-menu button:last-child {
+.dropdownMenu button:last-child {
   border-radius: 0 0 6px 6px;
 }
 
-.dropdown-menu button:hover {
+.dropdownMenu button:hover {
   background-color: #f3f4f6;
 }
