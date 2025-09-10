@@ -258,6 +258,23 @@
   }
 }
 
+.addButton {
+  width: auto;
+  padding: 12px;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  width: 100%;
+  flex: 1;
+}
+.addButton:hover {
+  background-color: #dbdada;
+}
+
 @media (max-width: 768px) {
   .timeline {
     align-items: flex-start;

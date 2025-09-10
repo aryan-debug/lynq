@@ -102,7 +102,7 @@ function Timeline({ timelineId }: TimelineProps) {
         <div className={styles.floatingMenu}>
           <button
             onClick={() => addEvent(activeProjectId, timelineId)}
-            className="add-button"
+            className={styles.addButton}
             title="Add a new timeline item"
             aria-label="Add new timeline item"
           >
